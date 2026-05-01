@@ -1,0 +1,10 @@
+{
+  "contracts/Test.sol": {
+    "__sources__": {
+      "contracts/Test.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ncontract Test {\r\n\r\n    struct LogEntry {\r\n        uint256 id;\r\n        string message;\r\n        address createdBy;\r\n        uint256 timestamp;\r\n    }\r\n\r\n    LogEntry[] public logs;\r\n\r\n    event LogCreated(uint256 id, string message, address createdBy, uint256 timestamp);\r\n\r\n    function addLog(string memory _message) public {\r\n        uint256 id = logs.length;\r\n\r\n        logs.push(LogEntry({\r\n            id: id,\r\n            message: _message,\r\n            createdBy: msg.sender,\r\n            timestamp: block.timestamp\r\n        }));\r\n\r\n        emit LogCreated(id, _message, msg.sender, block.timestamp);\r\n    }\r\n\r\n    function getLog(uint256 _id) public view returns (\r\n        string memory message,\r\n        address createdBy,\r\n        uint256 timestamp\r\n    ) {\r\n        require(_id < logs.length, \"Invalid ID\");\r\n\r\n        LogEntry memory log = logs[_id];\r\n        return (log.message, log.createdBy, log.timestamp);\r\n    }\r\n\r\n    function getTotalLogs() public view returns (uint256) {\r\n        return logs.length;\r\n    }\r\n}",
+        "file": "contracts/Test.sol"
+      }
+    }
+  }
+}
